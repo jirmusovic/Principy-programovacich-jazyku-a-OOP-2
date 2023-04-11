@@ -14,7 +14,7 @@ def err(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
 
 
-def main():
+if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Loads an XML representation of an IPPcode23 program and interprets it.',
         epilog='At least one of --source and --input arguments must be used. If one of them is missing, '
@@ -56,7 +56,7 @@ def main():
     cnt = 0
     instr = instructions.Instruction()
     state = instructions.State()
-    print(root[1][0].text)
+    global_frame = instructions.GlobalFrame()
     while cnt != todo:
         cnt += 1
         for tmp in root:
@@ -65,13 +65,29 @@ def main():
                 instr.name = tmp.attrib['opcode']
                 instr.order = tmp.attrib['order']
                 num = instr.how_many_args(tmp.attrib['opcode'])
-                getattr(instructions.Instruction, instr.name)(instructions.Instruction, instructions.State(tmp.attrib['order'], num))
+                if num == 0:
+                    getattr(instructions.Instruction, instr.name)(instructions.Instruction, instructions.State(tmp.attrib['order'], num, global_frame, root, 0))
+                elif num == 1:
+                    var = tmp.find('arg1').text
+                    type1 = tmp.find('arg1').get('type')
+                    getattr(instructions.Instruction, instr.name)(instructions.Instruction, instructions.State(tmp.attrib['order'], num, global_frame, root, 0, var, type1))
+                elif num == 2:
+                    var1 = tmp.find('arg1').text
+                    var2 = tmp.find('arg2').text
+                    type1 = tmp.find('arg1').get('type')
+                    type2 = tmp.find('arg2').get('type')
+                    getattr(instructions.Instruction, instr.name)(instructions.Instruction, instructions.State(tmp.attrib['order'], num, global_frame, root, 0, var1, var2, type1, type2))
+                elif num == 3:
+                    var1 = tmp.find('arg1').text
+                    var2 = tmp.find('arg2').text
+                    var3 = tmp.find('arg3').text
+                    type1 = tmp.find('arg1').get('type')
+                    type2 = tmp.find('arg2').get('type')
+                    type3 = tmp.find('arg3').get('type')
+                    getattr(instructions.Instruction, instr.name)(instructions.Instruction, instructions.State(tmp.attrib['order'], num, global_frame, root, 0, var1, var2, var3, type1, type2, type3))
+
                 """print(tmp[0].text)"""
                 for sub in tmp:
                     if len(tmp) != num:
                         err("Neocekavana struktura XML!, 32")
-                        break
-
-
-if __name__ == '__main__':
-    main()
+                        exit(32)
