@@ -1,12 +1,13 @@
 import re
 import sys
 import traceback
-import instructions
 from typing import Optional, List
 import xml.etree.ElementTree as eet
 import argparse
 import configparser
 from html.parser import HTMLParser
+
+import instructions
 
 
 def err(*args, **kwargs):
@@ -48,34 +49,28 @@ def main():
     src = src[0][0]
     inp = args.input
 
-    class Instructions:
-        def __innit__(self, opcode, order, arg1, arg2, arg3, data1, data2, data3):
-            self.op = opcode
-            self.order = order
-            self.a1 = arg1
-            self.a2 = arg2
-            self.a3 = arg3
-            self.d1 = data1
-            self.d2 = data2
-            self.d3 = data3
-
-    class DType:
-        INT = 'int'
-        BOOL = 'bool'
-        NIL = 'nil'
-        STR = 'string'
-        FLOAT = 'float'
-        UNDEFINED = ''
-
     tree = eet.parse(src)
     root = tree.getroot()
 
-    for instruction in root:
-        if instruction.attrib['opcode'] == "WRITE":
-
-        print(instruction.attrib['order'], instruction.attrib['opcode'])
-        for sub in instruction:
-            print(sub.tag, sub.text)
+    todo = len(root)
+    cnt = 0
+    instr = instructions.Instruction()
+    state = instructions.State()
+    print(root[1][0].text)
+    while cnt != todo:
+        cnt += 1
+        for tmp in root:
+            if cnt == int(tmp.attrib['order']):
+                """print(tmp.attrib['order'], tmp.attrib['opcode'])"""
+                instr.name = tmp.attrib['opcode']
+                instr.order = tmp.attrib['order']
+                num = instr.how_many_args(tmp.attrib['opcode'])
+                getattr(instructions.Instruction, instr.name)(instructions.Instruction, instructions.State(tmp.attrib['order'], num))
+                """print(tmp[0].text)"""
+                for sub in tmp:
+                    if len(tmp) != num:
+                        err("Neocekavana struktura XML!, 32")
+                        break
 
 
 if __name__ == '__main__':
