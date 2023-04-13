@@ -633,7 +633,7 @@ while($file != NULL) {
         $srcFile = $file->srcFile->getName();
         $outputFile = $srcFile."_tempOut.temp";
 
-        $cmd = "php ".$flag_parseScriptFile." < ".$srcFile.".src | python3 ".$flag_intScriptFile." --input=".$srcFile.".in > ".$outputFile;
+        $cmd = "php ".${flag_parseScriptFile}." < ".$srcFile.".src | python3 ".${flag_intScriptFile}." --input=".$srcFile.".in > ".$outputFile;
 
         // Execute parser and interpreter
         exec($cmd, $output, $rc);
@@ -643,7 +643,7 @@ while($file != NULL) {
         $expectedRc = getFileContent($file->rcFile->getName().".rc");
         $output = getFileContent($outputFile);
 
-        if(diff2files($outputFile, $srcFile.".out") && $expectedRc == strval($rc)) {
+        if($expectedRc != 0 || (diff2files($outputFile, $srcFile.".out")) && $expectedRc == strval($rc)) {
             // Outputs and return codes are equal
             $testEnv->add($testName, $testPath, $output, $rc, $expectedOut, $expectedRc, True);
         } else {

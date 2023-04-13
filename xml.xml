@@ -19,10 +19,10 @@
         <instruction order="7" opcode="WRITE">
                 <arg1 type="string">\010</arg1>
         </instruction>
-        <instruction order="8" opcode="CONCAT">
+        <instruction order="8" opcode="ADD">
                 <arg1 type="var">GF@counter</arg1>
-                <arg2 type="var">GF@counter</arg2>
-                <arg3 type="string">a</arg3>
+                <arg2 type="int">6</arg2>
+                <arg3 type="int">4</arg3>
         </instruction>
         <instruction order="9" opcode="JUMP">
                 <arg1 type="label">while</arg1>
