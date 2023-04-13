@@ -27,6 +27,7 @@ class Instruction:
             interpret.err("Neocekavana XML struktura!", 32)
             return -1
 
+
     def MOVE(self, state):
         print(state.numOfArgs)
 
@@ -56,6 +57,8 @@ class Instruction:
             if state.GFrame.get(state.name) is None:
                 interpret.err("běhová chyba interpretace", 54)
                 exit(54)
+            if not state.arg2.isdigit() or not state.arg3.isdigit():
+                sys.exit(32)
             var1 = int(state.arg2)
             var2 = int(state.arg3)
             result = var1 + var2
@@ -194,13 +197,25 @@ class Instruction:
 
     def BREAK(self, state):
         print(state.order)
+        
+    def CREATEFRAME(self, state):
+        print(state.order)
+        
+    def POPFRAME(self, state):
+        print(state.order)
+        
+    def PUSHFRAME(self, state):
+        print(state.order)
+
 
 
 class State:
-    def __init__(self, order=1, numOfArgs=0, GFrame=None, root=None, name=None, arg1=None, arg2=None, arg3=None, type1=None, type2=None, type3=None):
+    def __init__(self, order=1, numOfArgs=0, GFrame=None, LFrame=None, TFrame=None, root=None, name=None, arg1=None, arg2=None, arg3=None, type1=None, type2=None, type3=None):
         self.order = order
         self.numOfArgs = numOfArgs
         self.GFrame = GFrame
+        self.LFrame = LFrame
+        self.TFrame = TFrame
         self.root = root
         self.name = name
         self.arg1 = arg1
@@ -226,6 +241,38 @@ class GlobalFrame:
 
     def __repr__(self):
         return f"GlobalFrame({self.variables})"
+    
+class LocalFrame:
+    def __init__(self):
+        self.variables = {}
+
+    def define(self, name, value):
+        self.variables[name] = value
+
+    def get(self, name):
+        if name in self.variables:
+            return self.variables[name]
+        else:
+            return None
+
+    def __repr__(self):
+        return f"LocalFrame({self.variables})"
+    
+class TemporalFrame:
+    def __init__(self):
+        self.variables = {}
+
+    def define(self, name, value):
+        self.variables[name] = value
+
+    def get(self, name):
+        if name in self.variables:
+            return self.variables[name]
+        else:
+            return None
+
+    def __repr__(self):
+        return f"TemporalFrame({self.variables})"
 
 
 class DType:
