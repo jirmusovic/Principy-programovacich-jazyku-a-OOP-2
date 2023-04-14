@@ -13,8 +13,8 @@
 <body>
     <h1 style="text-align: center;">Test result</h1>
     <h2>Tests run: 53</h2>
-    <h2>Passed: 18 </h2>
-    <h2>Failed: 35 </h2>
+    <h2>Passed: 21 </h2>
+    <h2>Failed: 32 </h2>
     <hr>
     <h3 style="text-align: center; color:red">Failed tests</h3><hr><h4>ipp-2023-tests/interpret-only/xml_structure</h4><table><tr><th>Test name</th><th>Return code</th><th>Expected return code</th><th>Output</th><th>Expected output</th></tr>
 <tr><td>arg_order1</td><td>0</td><td>0</td><td><textarea readonly rows=5 cols=50>2
@@ -100,21 +100,12 @@ didn't\032jump</textarea></td><td><textarea readonly rows=5 cols=50>did jump</te
 
 </table>
 <hr><h4>ipp-2023-tests/interpret-only/frames</h4><table><tr><th>Test name</th><th>Return code</th><th>Expected return code</th><th>Output</th><th>Expected output</th></tr>
-<tr><td>defvarnoTF</td><td>0</td><td>55</td><td><textarea readonly rows=5 cols=50></textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
-
-<tr><td>popEmpty</td><td>0</td><td>55</td><td><textarea readonly rows=5 cols=50>1</textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
-
-<tr><td>pushEmpty</td><td>0</td><td>55</td><td><textarea readonly rows=5 cols=50>1</textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
-
-<tr><td>secondLF</td><td>52</td><td>0
-</td><td><textarea readonly rows=5 cols=50>1
-2
-4
+<tr><td>secondLF</td><td>0</td><td>0
+</td><td><textarea readonly rows=5 cols=50>2
 LF@var
-10</textarea></td><td><textarea readonly rows=5 cols=50>510510</textarea></td></tr>
+2</textarea></td><td><textarea readonly rows=5 cols=50>510510</textarea></td></tr>
 
-<tr><td>TFafterPush</td><td>0</td><td>55</td><td><textarea readonly rows=5 cols=50>1
-3</textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
+<tr><td>TFafterPush</td><td>0</td><td>55</td><td><textarea readonly rows=5 cols=50></textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
 </table>
 <hr><h4>ipp-2023-tests/interpret-only/arithmetic</h4><table><tr><th>Test name</th><th>Return code</th><th>Expected return code</th><th>Output</th><th>Expected output</th></tr>
@@ -160,6 +151,14 @@ abc</textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 <tr><td>all_program_attributes</td><td>0</td><td><textarea readonly rows=5 cols=50>0</textarea></td></tr>
 
 <tr><td>dprint</td><td>0</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
+
+</table>
+<hr><h4>ipp-2023-tests/interpret-only/frames</h4><table><tr><th>Test name</th><th>Return code</th><th>Output</th></tr>
+<tr><td>defvarnoTF</td><td>55</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
+
+<tr><td>popEmpty</td><td>55</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
+
+<tr><td>pushEmpty</td><td>55</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
 </table>
 <hr><h4>ipp-2023-tests/interpret-only/arithmetic</h4><table><tr><th>Test name</th><th>Return code</th><th>Output</th></tr>

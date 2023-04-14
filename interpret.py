@@ -48,7 +48,6 @@ if __name__ == '__main__':
     src = args.source[0][0] if args.source != None else sys.stdin
     if src != sys.stdin:
         src = open(src, "r")
-    inp = args.input
 
     try:
         tree = eet.parse(src)
@@ -56,13 +55,22 @@ if __name__ == '__main__':
         sys.exit(32)
     root = tree.getroot()
 
+    input_file = args.input[0][0] if not None else sys.stdin
+    if input_file != sys.stdin:
+        try:
+            input_file = open(input_file, "r")
+        except:
+            exit(99)
+
     todo = len(root)
     cnt = 0
-    instr = instructions.Instruction()
+    instr = instructions.Instruction(None)
     state = instructions.State()
-    global_frame = instructions.GlobalFrame()
-    local_frame = instructions.LocalFrame()
-    temporal_frame = instructions.TemporalFrame()
+
+    max_order = 1
+    instruction_set = {}
+    # order: [instr, instr.name, instruction.State]
+
     while cnt != todo:
         cnt += 1
         for tmp in root:
@@ -75,17 +83,23 @@ if __name__ == '__main__':
                 if 'opcode' not in tmp.attrib.keys():
                     sys.exit(32)
                 instr.name = tmp.attrib['opcode']
-                instr.order = tmp.attrib['order']
+                instr.order = int(tmp.attrib['order'])
+                if instr.order > max_order:
+                    max_order = instr.order
                 num = instr.how_many_args(tmp.attrib['opcode'])
+                if instr.order in instruction_set or instr.order <= 0:
+                    exit(32)
                 if num == 0:
-                    getattr(instructions.Instruction, instr.name)(instructions.Instruction, instructions.State(tmp.attrib['order'], num, global_frame, local_frame, temporal_frame, root, 0))
+                    instruction_set[instr.order] = [instr, instr.name, instructions.State(instr.order, num, root, 0)]
+                    
                 elif num == 1:
                     var = tmp.find('arg1')
                     if var == None:
                         sys.exit(32)
                     var = var.text
                     type1 = tmp.find('arg1').get('type')
-                    getattr(instructions.Instruction, instr.name)(instructions.Instruction, instructions.State(tmp.attrib['order'], num, global_frame, local_frame, temporal_frame, root, 0, var, type1))
+                    instruction_set[instr.order] = [instr, instr.name, instructions.State(instr.order, num, root, 0, arg1=var, type1=type1)]
+                    
                 elif num == 2:
                     var1 = tmp.find('arg1')
                     if var1 == None:
@@ -97,7 +111,8 @@ if __name__ == '__main__':
                     var2 = var2.text
                     type1 = tmp.find('arg1').get('type')
                     type2 = tmp.find('arg2').get('type')
-                    getattr(instructions.Instruction, instr.name)(instructions.Instruction, instructions.State(tmp.attrib['order'], num, global_frame, local_frame, temporal_frame, root, 0, var1, var2, type1, type2))
+                    instruction_set[instr.order] = [instr, instr.name, instructions.State(instr.order, num, root, 0, arg1=var1, arg2=var2, type1=type1, type2=type2)]
+                    
                 elif num == 3:
                     var1 = tmp.find('arg1')
                     if var1 == None:
@@ -114,10 +129,41 @@ if __name__ == '__main__':
                     type1 = tmp.find('arg1').get('type')
                     type2 = tmp.find('arg2').get('type')
                     type3 = tmp.find('arg3').get('type')
-                    getattr(instructions.Instruction, instr.name)(instructions.Instruction, instructions.State(tmp.attrib['order'], num, global_frame, local_frame, temporal_frame, root, 0, var1, var2, var3, type1, type2, type3))
+                    instruction_set[instr.order] = [instr, instr.name, instructions.State(instr.order, num, root, 0, arg1=var1, arg2=var2, arg3=var3, type1=type1, type2=type2, type3=type3)]
+                    
 
                 """print(tmp[0].text)"""
                 for sub in tmp:
                     if len(tmp) != num:
                         err("Neocekavana struktura XML!, 32")
                         sys.exit(32)
+    
+    if len(instruction_set) == 0:
+        exit(0)
+
+    instr_count = 1
+    while instr_count <= max_order:
+        if instr_count not in instruction_set.keys():
+            instr_count += 1
+        else:
+            act_instr = instruction_set[instr_count]
+            if act_instr[1] == "LABEL":
+                getattr(act_instr[0], act_instr[1])(act_instr[2])
+            instr_count += 1
+            
+    
+    instr_count = 1
+    while instr_count <= max_order:
+        if instr_count not in instruction_set.keys():
+            instr_count += 1
+        else:
+            act_instr = instruction_set[instr_count]
+            if act_instr[1] == "LABEL":
+                instr_count += 1
+                continue
+            ret = getattr(act_instr[0], act_instr[1])(act_instr[2])
+            if ret == None:
+                instr_count += 1
+            else:
+                instr_count = ret
+            

@@ -1,4 +1,4 @@
-PY = python3.10
+PY = python3.8.10
 SCRIPT = interpret.py
 
 run:
