@@ -26,16 +26,22 @@ class Instruction:
             if state == 1:
                 if not self.glob_frame.is_defined(arg):
                     exit(54)
+                if not self.glob_frame.has_value(arg):
+                    exit(56)
                 return self.glob_frame.get(arg)
             if state == 2:
                 if not self.loc_frame.is_defined(arg):
                     exit(54)
+                if not self.loc_frame.has_value(arg):
+                    exit(56)
                 return self.loc_frame.get(arg)
             if state == 3:
                 if self.temp_frame == None:
                     exit(54)
                 if not self.temp_frame.is_defined(arg):
                     exit(54)
+                if not self.temp_frame.has_value(arg):
+                    exit(56)
                 return self.temp_frame.get(arg)
         elif type == "int":
             if not re.match('^-?\d+$', arg):
@@ -45,16 +51,18 @@ class Instruction:
             # vymeni escape sekvence za znaky
             if arg == None:
                 return "", "string"
-            new = ''
+
+            str = ""
             i = 0
             while i < len(arg):
-                if arg[i] == '/' and i < len(arg) - 3 and arg[i+1:i+4].isdigit():
-                    new += chr(int(arg[i+1:i+4]))
+                if arg[i] == '\\' and i < len(arg) - 3 and arg[i+1:i+4].isdigit():
+                    str += chr(int(arg[i+1:i+4]))
                     i += 4
                 else:
-                    new += arg[i]
+                    str += arg[i]
                     i += 1
-            return new, "string"
+            
+            return str, "string"
 
         elif type == "bool":
             if arg.upper() == "TRUE":
@@ -120,6 +128,8 @@ class Instruction:
         frame = self.get_frame(state.arg1)
         if frame == None:
             exit(54)
+        if not frame.is_defined(state.arg1):
+            exit(54)
         frame.define(state.arg1, val, type)
 
     def DEFVAR(self, state):
@@ -128,11 +138,15 @@ class Instruction:
         frame = self.get_frame(state.arg1)
         if frame == None:
             exit(55)
-        frame.define(state.arg1, None, None)
+        if frame.is_defined(state.arg1):
+            exit(52)
+        frame.define(state.arg1, "empty", "empty")
 
     def CALL(self, state):
         if state.type1 != "label":
                 exit(53)
+        if state.arg1 not in self.labels.keys():
+            exit(55)
         self.call_stack.append(self.order+1)
         return self.labels[state.arg1] 
 
@@ -151,6 +165,8 @@ class Instruction:
         if state.type2 != "var":
             exit(53)
         frame = self.get_frame(state.arg2)
+        if not frame.is_defined(state.arg1):
+            exit(54)
         valtype = self.stack.pop()
         frame.define(valtype[0], valtype[1])
 
@@ -159,6 +175,8 @@ class Instruction:
             exit(53)
         frame = self.get_frame(state.arg1)
         if frame == None:
+            exit(55)
+        if not frame.is_defined(state.arg1):
             exit(54)
         val1, type1 = self.get_value_type(state.arg2, state.type2)
         val2, type2 = self.get_value_type(state.arg3, state.type3)
@@ -174,6 +192,8 @@ class Instruction:
             exit(53)
         frame = self.get_frame(state.arg1)
         if frame == None:
+            exit(55)
+        if not frame.is_defined(state.arg1):
             exit(54)
         val1, type1 = self.get_value_type(state.arg2, state.type2)
         val2, type2 = self.get_value_type(state.arg3, state.type3)
@@ -188,6 +208,8 @@ class Instruction:
             exit(53)
         frame = self.get_frame(state.arg1)
         if frame == None:
+            exit(55)
+        if not frame.is_defined(state.arg1):
             exit(54)
         val1, type1 = self.get_value_type(state.arg2, state.type2)
         val2, type2 = self.get_value_type(state.arg3, state.type3)
@@ -202,6 +224,8 @@ class Instruction:
             exit(53)
         frame = self.get_frame(state.arg1)
         if frame == None:
+            exit(55)
+        if not frame.is_defined(state.arg1):
             exit(54)
         val1, type1 = self.get_value_type(state.arg2, state.type2)
         val2, type2 = self.get_value_type(state.arg3, state.type3)
@@ -220,6 +244,8 @@ class Instruction:
             exit(53)
         frame = self.get_frame(state.arg1)
         if frame == None:
+            exit(55)
+        if not frame.is_defined(state.arg1):
             exit(54)
         val1, type1 = self.get_value_type(state.arg2, state.type2)
         val2, type2 = self.get_value_type(state.arg3, state.type3)
@@ -235,6 +261,8 @@ class Instruction:
             exit(53)
         frame = self.get_frame(state.arg1)
         if frame == None:
+            exit(55)
+        if not frame.is_defined(state.arg1):
             exit(54)
         val1, type1 = self.get_value_type(state.arg2, state.type2)
         val2, type2 = self.get_value_type(state.arg3, state.type3)
@@ -250,6 +278,8 @@ class Instruction:
             exit(53)
         frame = self.get_frame(state.arg1)
         if frame == None:
+            exit(55)
+        if not frame.is_defined(state.arg1):
             exit(54)
         val1, type1 = self.get_value_type(state.arg2, state.type2)
         val2, type2 = self.get_value_type(state.arg3, state.type3)
@@ -266,6 +296,8 @@ class Instruction:
             exit(53)
         frame = self.get_frame(state.arg1)
         if frame == None:
+            exit(55)
+        if not frame.is_defined(state.arg1):
             exit(54)
         val1, type1 = self.get_value_type(state.arg2, state.type2)
         val2, type2 = self.get_value_type(state.arg3, state.type3)
@@ -278,6 +310,8 @@ class Instruction:
             exit(53)
         frame = self.get_frame(state.arg1)
         if frame == None:
+            exit(55)
+        if not frame.is_defined(state.arg1):
             exit(54)
         val1, type1 = self.get_value_type(state.arg2, state.type2)
         val2, type2 = self.get_value_type(state.arg3, state.type3)
@@ -290,6 +324,8 @@ class Instruction:
             exit(53)
         frame = self.get_frame(state.arg1)
         if frame == None:
+            exit(55)
+        if not frame.is_defined(state.arg1):
             exit(54)
         val1, type1 = self.get_value_type(state.arg2, state.type2)
 
@@ -302,6 +338,8 @@ class Instruction:
             exit(53)
         frame = self.get_frame(state.arg1)
         if frame == None:
+            exit(55)
+        if not frame.is_defined(state.arg1):
             exit(54)
         val1, type1 = self.get_value_type(state.arg2, state.type2)
         val2, type2 = self.get_value_type(state.arg3, state.type3)
@@ -320,6 +358,8 @@ class Instruction:
             exit(53)
         frame = self.get_frame(state.arg1)
         if frame == None:
+            exit(55)
+        if not frame.is_defined(state.arg1):
             exit(54)
         string = self.get_input()
         
@@ -355,6 +395,8 @@ class Instruction:
             exit(53)
         frame = self.get_frame(state.arg1)
         if frame == None:
+            exit(55)
+        if not frame.is_defined(state.arg1):
             exit(54)
         val1, type1 = self.get_value_type(state.arg2, state.type2)
         val2, type2 = self.get_value_type(state.arg3, state.type3)
@@ -369,6 +411,8 @@ class Instruction:
             exit(53)
         frame = self.get_frame(state.arg1)
         if frame == None:
+            exit(55)
+        if not frame.is_defined(state.arg1):
             exit(54)
         val1, type1 = self.get_value_type(state.arg2, state.type2)
         if type1 != "string":
@@ -380,6 +424,8 @@ class Instruction:
             exit(53)
         frame = self.get_frame(state.arg1)
         if frame == None:
+            exit(55)
+        if not frame.is_defined(state.arg1):
             exit(54)
         val1, type1 = self.get_value_type(state.arg2, state.type2)
         val2, type2 = self.get_value_type(state.arg3, state.type3)
@@ -397,6 +443,8 @@ class Instruction:
             exit(53)
         frame = self.get_frame(state.arg1)
         if frame == None:
+            exit(55)
+        if not frame.is_defined(state.arg1):
             exit(54)
         _, type = self.get_value_type(state.arg2, state.type2)
         frame.define(state.arg1, type, "string")
@@ -458,7 +506,8 @@ class Instruction:
         self.temp_frame = TemporalFrame()
         
     def POPFRAME(self, state):
-        self.temp_frame = self.loc_frame.pop()
+        self.temp_frame = TemporalFrame()
+        self.temp_frame.variables = self.loc_frame.pop()
         
     def PUSHFRAME(self, state):
         if self.temp_frame == None:
@@ -493,7 +542,10 @@ class GlobalFrame:
     def is_defined(self, name):
         if name not in self.variables:
             return False
-        if self.variables[name][0] == None and self.variables[name][1] == None:
+        return True
+        
+    def has_value(self, name):
+        if self.variables[name][0] == "empty" and self.variables[name][1] == "empty":
             return False
         return True
 
@@ -538,9 +590,16 @@ class LocalFrame:
             return False
         if name not in self.frames[len(self.frames) - 1]:
             return False
-        if self.frames[len(self.frames) - 1][name][0] == None and self.frames[len(self.frames) - 1][name][1] == None:
+        return True
+        
+
+    def has_value(self, name):
+        if len(self.frames) <= 0:
+            return False
+        if self.frames[len(self.frames) - 1][name][0] == "empty" and self.frames[len(self.frames) - 1][name][1] == "empty":
             return False
         return True
+        
 
     def get(self, name):
         if len(self.frames) > 0:
@@ -565,7 +624,11 @@ class TemporalFrame:
     def is_defined(self, name):
         if name not in self.variables:
             return False
-        if self.variables[name][0] == None and self.variables[name][1] == None:
+        return True
+        
+
+    def has_value(self, name):
+        if self.variables[name][0] == "empty" and self.variables[name][1] == "empty":
             return False
         return True
 

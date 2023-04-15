@@ -55,7 +55,10 @@ if __name__ == '__main__':
         sys.exit(32)
     root = tree.getroot()
 
-    input_file = args.input[0][0] if not None else sys.stdin
+    if args.input == None:
+        input_file = sys.stdin
+    else:
+        input_file = args.input[0][0]
     if input_file != sys.stdin:
         try:
             input_file = open(input_file, "r")
