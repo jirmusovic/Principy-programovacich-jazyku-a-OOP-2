@@ -50,6 +50,7 @@ if __name__ == '__main__':
                 Alespon jeden z techto paramteru musi byt zadan!")
             exit(0)
         else:
+            err("Chybějící parametr skriptu (je-li třeba) nebo použití zakázané kombinace parametrů", 10)
             exit(10)
 
     # Check if a file is given
@@ -71,6 +72,7 @@ if __name__ == '__main__':
     try:
         tree = eet.parse(src)
     except:
+        err("Neočekávaná struktura XML", 32)
         sys.exit(32)
     root = tree.getroot()
 
@@ -84,6 +86,7 @@ if __name__ == '__main__':
         try:
             input_file = open(input_file, "r")
         except:
+            err("Interní chyba", 99)
             exit(99)
 
     # Check how many instructions need to be checked
@@ -110,12 +113,15 @@ if __name__ == '__main__':
         # If not, exit the program with error code 32.
         for tmp in root:
             if 'order' not in tmp.attrib.keys():
+                err("Neočekávaná struktura XML", 32)
                 sys.exit(32)
             if not tmp.attrib['order'].isdigit():
+                err("Neočekávaná struktura XML", 32)
                 sys.exit(32)
             # If the 'order' attribute is equal to 'cnt', create an instruction object and add it to the 'instruction_set'
             if cnt == int(tmp.attrib['order']):
                 if 'opcode' not in tmp.attrib.keys():
+                    err("Neočekávaná struktura XML", 32)
                     sys.exit(32)
                 instr.name = tmp.attrib['opcode']
                 instr.order = int(tmp.attrib['order'])
@@ -124,6 +130,7 @@ if __name__ == '__main__':
                 num = instr.how_many_args(tmp.attrib['opcode'])
                 # If the instruction order is already in 'instruction_set' or less than or equal to 0, exit with error code 32
                 if instr.order in instruction_set or instr.order <= 0:
+                    err("Neočekávaná struktura XML", 32)
                     exit(32)
                 # Create an instruction object with correct number of arguments and add it to 'instruction_set'
                 # 0 arguments
@@ -134,6 +141,7 @@ if __name__ == '__main__':
                 elif num == 1:
                     var = tmp.find('arg1')
                     if var == None:
+                        err("Neočekávaná struktura XML", 32)
                         sys.exit(32)
                     var = var.text
                     type1 = tmp.find('arg1').get('type')
@@ -143,10 +151,12 @@ if __name__ == '__main__':
                 elif num == 2:
                     var1 = tmp.find('arg1')
                     if var1 == None:
+                        err("Neočekávaná struktura XML", 32)
                         sys.exit(32)
                     var1 = var1.text
                     var2 = tmp.find('arg2')
                     if var2 == None:
+                        err("Neočekávaná struktura XML", 32)
                         sys.exit(32)
                     var2 = var2.text
                     type1 = tmp.find('arg1').get('type')
@@ -157,14 +167,17 @@ if __name__ == '__main__':
                 elif num == 3:
                     var1 = tmp.find('arg1')
                     if var1 == None:
+                        err("Neočekávaná struktura XML", 32)
                         sys.exit(32)
                     var1 = var1.text
                     var2 = tmp.find('arg2')
                     if var2 == None:
+                        err("Neočekávaná struktura XML", 32)
                         sys.exit(32)
                     var2 = var2.text
                     var3 = tmp.find('arg3')
                     if var3 == None:
+                        err("Neočekávaná struktura XML", 32)
                         sys.exit(32)
                     var3 = var3.text
                     type1 = tmp.find('arg1').get('type')
