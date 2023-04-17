@@ -13,8 +13,8 @@
 <body>
     <h1 style="text-align: center;">Test result</h1>
     <h2>Tests run: 588</h2>
-    <h2>Passed: 507 </h2>
-    <h2>Failed: 81 </h2>
+    <h2>Passed: 518 </h2>
+    <h2>Failed: 70 </h2>
     <hr>
     <h3 style="text-align: center; color:red">Failed tests</h3><hr><h4>ipp-2023-tests/both/write</h4><table><tr><th>Test name</th><th>Return code</th><th>Expected return code</th><th>Output</th><th>Expected output</th></tr>
 <tr><td>write_undef3</td><td>54</td><td>55
@@ -167,8 +167,6 @@
 
 </table>
 <hr><h4>ipp-2023-tests/both/jumpifeq</h4><table><tr><th>Test name</th><th>Return code</th><th>Expected return code</th><th>Output</th><th>Expected output</th></tr>
-<tr><td>jumpifeq</td><td>53</td><td>0</td><td><textarea readonly rows=5 cols=50></textarea></td><td><textarea readonly rows=5 cols=50>11111111111111111111</textarea></td></tr>
-
 <tr><td>jumpifeq_undef2c</td><td>54</td><td>55
 </td><td><textarea readonly rows=5 cols=50></textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
@@ -185,8 +183,6 @@
 
 </table>
 <hr><h4>ipp-2023-tests/both/idiv</h4><table><tr><th>Test name</th><th>Return code</th><th>Expected return code</th><th>Output</th><th>Expected output</th></tr>
-<tr><td>idiv_negative</td><td>0</td><td>0</td><td><textarea readonly rows=5 cols=50>1.5</textarea></td><td><textarea readonly rows=5 cols=50>1</textarea></td></tr>
-
 <tr><td>idiv_undef1c</td><td>54</td><td>55
 </td><td><textarea readonly rows=5 cols=50></textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
@@ -194,9 +190,6 @@
 </td><td><textarea readonly rows=5 cols=50></textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
 <tr><td>idiv_undef3c</td><td>54</td><td>55
-</td><td><textarea readonly rows=5 cols=50></textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
-
-<tr><td>idiv_zero</td><td>52</td><td>57
 </td><td><textarea readonly rows=5 cols=50></textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
 </table>
@@ -212,8 +205,6 @@
 
 </table>
 <hr><h4>ipp-2023-tests/both/getchar</h4><table><tr><th>Test name</th><th>Return code</th><th>Expected return code</th><th>Output</th><th>Expected output</th></tr>
-<tr><td>getchar_type</td><td>0</td><td>0</td><td><textarea readonly rows=5 cols=50>int</textarea></td><td><textarea readonly rows=5 cols=50>string</textarea></td></tr>
-
 <tr><td>getchar_undef1c</td><td>54</td><td>55
 </td><td><textarea readonly rows=5 cols=50></textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
@@ -233,9 +224,6 @@
 <tr><td>call_undef</td><td>55</td><td>52
 </td><td><textarea readonly rows=5 cols=50></textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
-<tr><td>label_redef</td><td>0</td><td>52
-</td><td><textarea readonly rows=5 cols=50></textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
-
 </table>
 <hr><h4>ipp-2023-tests/both/exit</h4><table><tr><th>Test name</th><th>Return code</th><th>Expected return code</th><th>Output</th><th>Expected output</th></tr>
 <tr><td>exit_undef_lf1</td><td>54</td><td>55
@@ -243,24 +231,6 @@
 
 </table>
 <hr><h4>ipp-2023-tests/both/eq</h4><table><tr><th>Test name</th><th>Return code</th><th>Expected return code</th><th>Output</th><th>Expected output</th></tr>
-<tr><td>eq_badtype1</td><td>0</td><td>53
-</td><td><textarea readonly rows=5 cols=50></textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
-
-<tr><td>eq_badtype2</td><td>0</td><td>53
-</td><td><textarea readonly rows=5 cols=50></textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
-
-<tr><td>eq_badtype3</td><td>0</td><td>53
-</td><td><textarea readonly rows=5 cols=50></textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
-
-<tr><td>eq_badtype4</td><td>0</td><td>53
-</td><td><textarea readonly rows=5 cols=50></textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
-
-<tr><td>eq_badtype5</td><td>0</td><td>53
-</td><td><textarea readonly rows=5 cols=50></textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
-
-<tr><td>eq_badtype6</td><td>0</td><td>53
-</td><td><textarea readonly rows=5 cols=50></textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
-
 <tr><td>eq_undef1c</td><td>54</td><td>55
 </td><td><textarea readonly rows=5 cols=50></textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
@@ -875,6 +845,8 @@ Hello#World
 
 </table>
 <hr><h4>ipp-2023-tests/both/jumpifeq</h4><table><tr><th>Test name</th><th>Return code</th><th>Output</th></tr>
+<tr><td>jumpifeq</td><td>0</td><td><textarea readonly rows=5 cols=50>11111111111111111111</textarea></td></tr>
+
 <tr><td>jumpifeq_badtype1</td><td>53</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
 <tr><td>jumpifeq_badtype2</td><td>53</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
@@ -975,6 +947,8 @@ Hello#World
 
 <tr><td>idiv_badtype6</td><td>53</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
+<tr><td>idiv_negative</td><td>0</td><td><textarea readonly rows=5 cols=50>1</textarea></td></tr>
+
 <tr><td>idiv_type</td><td>0</td><td><textarea readonly rows=5 cols=50>int</textarea></td></tr>
 
 <tr><td>idiv_undef1</td><td>54</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
@@ -1004,6 +978,8 @@ Hello#World
 <tr><td>idiv_unset1</td><td>56</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
 <tr><td>idiv_unset2</td><td>56</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
+
+<tr><td>idiv_zero</td><td>57</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
 </table>
 <hr><h4>ipp-2023-tests/both/gt</h4><table><tr><th>Test name</th><th>Return code</th><th>Output</th></tr>
@@ -1085,6 +1061,8 @@ Hello#World
 
 <tr><td>getchar_outrange2</td><td>58</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
+<tr><td>getchar_type</td><td>0</td><td><textarea readonly rows=5 cols=50>string</textarea></td></tr>
+
 <tr><td>getchar_undef1</td><td>54</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
 <tr><td>getchar_undef1b</td><td>55</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
@@ -1139,6 +1117,8 @@ Hello#World
 
 </table>
 <hr><h4>ipp-2023-tests/both/func</h4><table><tr><th>Test name</th><th>Return code</th><th>Output</th></tr>
+<tr><td>label_redef</td><td>52</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
+
 <tr><td>return_empty_stack1</td><td>56</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
 <tr><td>return_empty_stack2</td><td>56</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
@@ -1186,6 +1166,18 @@ Hello#World
 <tr><td>eq</td><td>0</td><td><textarea readonly rows=5 cols=50>falsetruefalsefalsefalsefalsefalsetruetruefalsefalsetruefalsefalsetruefalsefalsefalsefalsetrue</textarea></td></tr>
 
 <tr><td>eq2</td><td>0</td><td><textarea readonly rows=5 cols=50>falsetruefalsefalsefalsefalsefalsetruetruefalsefalsetruefalsefalsetruefalsefalsefalsefalsetrue</textarea></td></tr>
+
+<tr><td>eq_badtype1</td><td>53</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
+
+<tr><td>eq_badtype2</td><td>53</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
+
+<tr><td>eq_badtype3</td><td>53</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
+
+<tr><td>eq_badtype4</td><td>53</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
+
+<tr><td>eq_badtype5</td><td>53</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
+
+<tr><td>eq_badtype6</td><td>53</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
 <tr><td>eq_type</td><td>0</td><td><textarea readonly rows=5 cols=50>bool</textarea></td></tr>
 

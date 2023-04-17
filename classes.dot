@@ -1,0 +1,13 @@
+digraph "classes" {
+charset="utf-8"
+rankdir=BT
+"0" [label="{instructions.GlobalFrame|variables : dict\l|define(name, value, type)\lget(name)\lhas_value(name)\lis_defined(name)\l}", shape="record"];
+"1" [label="{instructions.Instruction|call_stack : list\lfile\lglob_frame\linput_lines\llabels : dict\lloc_frame\lname : NoneType\lorder : int, NoneType\lstack : list\ltemp_frame : NoneType\l|ADD(state)\lAND(state)\lBREAK(state)\lCALL(state)\lCONCAT(state)\lCREATEFRAME(state)\lDEFVAR(state)\lDPRINT(state)\lEQ(state)\lEXIT(state)\lGETCHAR(state)\lGT(state)\lIDIV(state)\lINT2CHAR(state)\lJUMP(state)\lJUMPIFEQ(state)\lJUMPIFNEQ(state)\lLABEL(state)\lLT(state)\lMOVE(state)\lMUL(state)\lNOT(state)\lOR(state)\lPOPFRAME(state)\lPOPS(state)\lPUSHFRAME(state)\lPUSHS(state)\lREAD(state)\lRETURN(state)\lSETCHAR(state)\lSTRI2INT(state)\lSTRLEN(state)\lSUB(state)\lTYPE(state)\lWRITE(state)\lget_frame(arg)\lget_input()\lget_state(arg)\lget_value_type(arg, type)\lhow_many_args(opcode)\l}", shape="record"];
+"2" [label="{instructions.LocalFrame|frames : list\l|define(name, value, type)\lget(name)\lhas_value(name)\lis_defined(name)\lpop()\lpush(frame)\l}", shape="record"];
+"3" [label="{instructions.State|arg1 : NoneType\larg2 : NoneType\larg3 : NoneType\lname : NoneType\lnumOfArgs : int\lorder : int\lroot : NoneType\ltype1 : NoneType\ltype2 : NoneType\ltype3 : NoneType\l|}", shape="record"];
+"4" [label="{instructions.TemporalFrame|variables : dict\l|define(name, value, type)\lget(name)\lhas_value(name)\lis_defined(name)\l}", shape="record"];
+"0" -> "1" [arrowhead="diamond", arrowtail="none", fontcolor="turquoise", label="glob_frame", style="solid"];
+"2" -> "1" [arrowhead="diamond", arrowtail="none", fontcolor="turquoise", label="loc_frame", style="solid"];
+"4" -> "1" [arrowhead="diamond", arrowtail="none", fontcolor="turquoise", label="temp_frame", style="solid"];
+"3" -> "1" [arrowhead="arrow", arrowtail="none", fontcolor="turquoise", label="uses", style="solid"];
+}

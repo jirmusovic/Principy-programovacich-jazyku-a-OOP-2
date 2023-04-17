@@ -687,6 +687,9 @@ class Instruction:
         if state.type1 != "label":
             interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
             exit(53)
+        if state.arg1 in self.labels:
+            interpret.err("Chyba při sémantických kontrolách vstupního kódu v IPPcode23", 52)
+            exit(52)
         self.labels[state.arg1] = state.order
 
     def JUMP(self, state):
