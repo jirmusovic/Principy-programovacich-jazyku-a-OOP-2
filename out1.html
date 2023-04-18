@@ -12,133 +12,51 @@
 
 <body>
     <h1 style="text-align: center;">Test result</h1>
-    <h2>Tests run: 53</h2>
-    <h2>Passed: 21 </h2>
-    <h2>Failed: 32 </h2>
+    <h2>Tests run: 58</h2>
+    <h2>Passed: 53 </h2>
+    <h2>Failed: 5 </h2>
     <hr>
     <h3 style="text-align: center; color:red">Failed tests</h3><hr><h4>ipp-2023-tests/interpret-only/xml_structure</h4><table><tr><th>Test name</th><th>Return code</th><th>Expected return code</th><th>Output</th><th>Expected output</th></tr>
-<tr><td>arg_order1</td><td>0</td><td>0</td><td><textarea readonly rows=5 cols=50>2
-GF@val</textarea></td><td><textarea readonly rows=5 cols=50>Hello</textarea></td></tr>
-
-<tr><td>arg_quantity1</td><td>32</td><td>32</td><td><textarea readonly rows=5 cols=50>2</textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
-
-<tr><td>duplicate_order</td><td>0</td><td>32
-</td><td><textarea readonly rows=5 cols=50>2
-GF@val</textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
-
-<tr><td>instruction_order1</td><td>0</td><td>0</td><td><textarea readonly rows=5 cols=50>2
-GF@val</textarea></td><td><textarea readonly rows=5 cols=50>Hello</textarea></td></tr>
-
-<tr><td>space_order</td><td>0</td><td>0</td><td><textarea readonly rows=5 cols=50></textarea></td><td><textarea readonly rows=5 cols=50>Hello</textarea></td></tr>
-
-<tr><td>wrong_tag1</td><td>0</td><td>32</td><td><textarea readonly rows=5 cols=50>2
-GF@val</textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
-
-<tr><td>xml_format1</td><td>32</td><td>31</td><td><textarea readonly rows=5 cols=50></textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
-
-<tr><td>xml_fromat2</td><td>32</td><td>31</td><td><textarea readonly rows=5 cols=50></textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
-
-<tr><td>zero_order</td><td>0</td><td>32</td><td><textarea readonly rows=5 cols=50>2
-GF@val</textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
+<tr><td>wrong_tag1</td><td>0</td><td>32</td><td><textarea readonly rows=5 cols=50>Hello</textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
 </table>
 <hr><h4>ipp-2023-tests/interpret-only/valid</h4><table><tr><th>Test name</th><th>Return code</th><th>Expected return code</th><th>Output</th><th>Expected output</th></tr>
-<tr><td>defvar_move</td><td>0</td><td>0</td><td><textarea readonly rows=5 cols=50>2
-GF@a</textarea></td><td><textarea readonly rows=5 cols=50>42</textarea></td></tr>
-
-<tr><td>exit</td><td>0</td><td>42</td><td><textarea readonly rows=5 cols=50>1</textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
-
-<tr><td>label_call_return</td><td>0</td><td>0</td><td><textarea readonly rows=5 cols=50>1
-2
-Oh,yeah,motherfucker!
-5
-6</textarea></td><td><textarea readonly rows=5 cols=50>Oh,yeah,motherfucker!</textarea></td></tr>
-
-<tr><td>read</td><td>0</td><td>0</td><td><textarea readonly rows=5 cols=50>4
-GF@a
-6
-GF@b
-8
-GF@c</textarea></td><td><textarea readonly rows=5 cols=50>42just a string!true</textarea></td></tr>
-
-<tr><td>stack_test</td><td>32</td><td>0</td><td><textarea readonly rows=5 cols=50>1
-2</textarea></td><td><textarea readonly rows=5 cols=50>ahoj světe</textarea></td></tr>
-
-<tr><td>type</td><td>0</td><td>0</td><td><textarea readonly rows=5 cols=50>3
-GF@type
-5
-GF@type</textarea></td><td><textarea readonly rows=5 cols=50>int</textarea></td></tr>
-
-<tr><td>write</td><td>0</td><td>0</td><td><textarea readonly rows=5 cols=50>0
-abc</textarea></td><td><textarea readonly rows=5 cols=50>0abc</textarea></td></tr>
+<tr><td>type</td><td>56</td><td>0</td><td><textarea readonly rows=5 cols=50></textarea></td><td><textarea readonly rows=5 cols=50>int</textarea></td></tr>
 
 </table>
-<hr><h4>ipp-2023-tests/interpret-only/valid/order</h4><table><tr><th>Test name</th><th>Return code</th><th>Expected return code</th><th>Output</th><th>Expected output</th></tr>
-<tr><td>discontinuously_ordered_instructions</td><td>0</td><td>0</td><td><textarea readonly rows=5 cols=50></textarea></td><td><textarea readonly rows=5 cols=50>21cd0abf</textarea></td></tr>
-
-<tr><td>unordered_instructions</td><td>0</td><td>0</td><td><textarea readonly rows=5 cols=50>2
-1
-cd
-0
-ab
-f</textarea></td><td><textarea readonly rows=5 cols=50>21cd0abf</textarea></td></tr>
+<hr><h4>ipp-2023-tests/interpret-only/krivka</h4><table><tr><th>Test name</th><th>Return code</th><th>Expected return code</th><th>Output</th><th>Expected output</th></tr>
+<tr><td>spec_example</td><td>0</td><td>0</td><td><textarea readonly rows=5 cols=50>Proměnná GF@counter obsahuje
+Proměnná GF@counter obsahuje a
+Proměnná GF@counter obsahuje aa</textarea></td><td><textarea readonly rows=5 cols=50>Proměnná GF@counter obsahuje 
+Proměnná GF@counter obsahuje a
+Proměnná GF@counter obsahuje aa
+</textarea></td></tr>
 
 </table>
 <hr><h4>ipp-2023-tests/interpret-only/jumps</h4><table><tr><th>Test name</th><th>Return code</th><th>Expected return code</th><th>Output</th><th>Expected output</th></tr>
-<tr><td>duplicateLabel</td><td>0</td><td>52</td><td><textarea readonly rows=5 cols=50>3</textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
-
-<tr><td>jumpForward</td><td>0</td><td>0
-</td><td><textarea readonly rows=5 cols=50>1
-didn't\032jump</textarea></td><td><textarea readonly rows=5 cols=50>did jump</textarea></td></tr>
-
-<tr><td>jumpifeq</td><td>53</td><td>0
-</td><td><textarea readonly rows=5 cols=50>2
-3
-4</textarea></td><td><textarea readonly rows=5 cols=50>5</textarea></td></tr>
-
-<tr><td>nonexistLabel</td><td>0</td><td>52</td><td><textarea readonly rows=5 cols=50></textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
-
-</table>
-<hr><h4>ipp-2023-tests/interpret-only/frames</h4><table><tr><th>Test name</th><th>Return code</th><th>Expected return code</th><th>Output</th><th>Expected output</th></tr>
-<tr><td>secondLF</td><td>0</td><td>0
-</td><td><textarea readonly rows=5 cols=50>2
-LF@var
-2</textarea></td><td><textarea readonly rows=5 cols=50>510510</textarea></td></tr>
-
-<tr><td>TFafterPush</td><td>0</td><td>55</td><td><textarea readonly rows=5 cols=50></textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
-
-</table>
-<hr><h4>ipp-2023-tests/interpret-only/arithmetic</h4><table><tr><th>Test name</th><th>Return code</th><th>Expected return code</th><th>Output</th><th>Expected output</th></tr>
-<tr><td>correct</td><td>53</td><td>0</td><td><textarea readonly rows=5 cols=50>2</textarea></td><td><textarea readonly rows=5 cols=50>3</textarea></td></tr>
-
-<tr><td>negativeNum</td><td>32</td><td>0
-</td><td><textarea readonly rows=5 cols=50></textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
+<tr><td>nonexistLabel</td><td>55</td><td>52</td><td><textarea readonly rows=5 cols=50></textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
 </table>
 <hr><h4>ipp-2023-tests/interpret-only/32</h4><table><tr><th>Test name</th><th>Return code</th><th>Expected return code</th><th>Output</th><th>Expected output</th></tr>
-<tr><td>duplicit_order</td><td>0</td><td>32</td><td><textarea readonly rows=5 cols=50>0
-abc</textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
-
-<tr><td>negative_order</td><td>32</td><td>32</td><td><textarea readonly rows=5 cols=50>0</textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
-
-<tr><td>unknown_element</td><td>0</td><td>32</td><td><textarea readonly rows=5 cols=50>0
-0</textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
-
-<tr><td>unknown_element2</td><td>32</td><td>32</td><td><textarea readonly rows=5 cols=50>0</textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
-
-<tr><td>write_test</td><td>32</td><td>32</td><td><textarea readonly rows=5 cols=50>0</textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
-
-</table>
-<hr><h4>ipp-2023-tests/interpret-only/31</h4><table><tr><th>Test name</th><th>Return code</th><th>Expected return code</th><th>Output</th><th>Expected output</th></tr>
-<tr><td>fucked_up_xml</td><td>32</td><td>31</td><td><textarea readonly rows=5 cols=50></textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
+<tr><td>unknown_element</td><td>0</td><td>32</td><td><textarea readonly rows=5 cols=50>00</textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
 </table>
 <hr><h3 style="text-align: center; color:green">Passed tests</h3><hr><h4>ipp-2023-tests/interpret-only/xml_structure</h4><table><tr><th>Test name</th><th>Return code</th><th>Output</th></tr>
+<tr><td>arg_order1</td><td>0</td><td><textarea readonly rows=5 cols=50>Hello</textarea></td></tr>
+
+<tr><td>arg_quantity1</td><td>32</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
+
 <tr><td>arg_quantity2</td><td>32</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
 <tr><td>arg_quantity3</td><td>32</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
+<tr><td>duplicate_order</td><td>32</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
+
+<tr><td>instruction_order1</td><td>0</td><td><textarea readonly rows=5 cols=50>Hello</textarea></td></tr>
+
 <tr><td>negative_order</td><td>32</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
+
+<tr><td>space_order</td><td>0</td><td><textarea readonly rows=5 cols=50>Hello</textarea></td></tr>
 
 <tr><td>wrong_language</td><td>32</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
@@ -146,11 +64,53 @@ abc</textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
 <tr><td>wrong_tag2</td><td>32</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
+<tr><td>xml_format1</td><td>31</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
+
+<tr><td>xml_fromat2</td><td>31</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
+
+<tr><td>zero_order</td><td>32</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
+
 </table>
 <hr><h4>ipp-2023-tests/interpret-only/valid</h4><table><tr><th>Test name</th><th>Return code</th><th>Output</th></tr>
 <tr><td>all_program_attributes</td><td>0</td><td><textarea readonly rows=5 cols=50>0</textarea></td></tr>
 
+<tr><td>defvar_move</td><td>0</td><td><textarea readonly rows=5 cols=50>42</textarea></td></tr>
+
 <tr><td>dprint</td><td>0</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
+
+<tr><td>exit</td><td>42</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
+
+<tr><td>label_call_return</td><td>0</td><td><textarea readonly rows=5 cols=50>Oh,yeah,motherfucker!</textarea></td></tr>
+
+<tr><td>read</td><td>0</td><td><textarea readonly rows=5 cols=50>42just a string!true</textarea></td></tr>
+
+<tr><td>stack_test</td><td>0</td><td><textarea readonly rows=5 cols=50>ahoj světe</textarea></td></tr>
+
+<tr><td>write</td><td>0</td><td><textarea readonly rows=5 cols=50>0abc</textarea></td></tr>
+
+</table>
+<hr><h4>ipp-2023-tests/interpret-only/valid/order</h4><table><tr><th>Test name</th><th>Return code</th><th>Output</th></tr>
+<tr><td>discontinuously_ordered_instructions</td><td>0</td><td><textarea readonly rows=5 cols=50>21cd0abf</textarea></td></tr>
+
+<tr><td>unordered_instructions</td><td>0</td><td><textarea readonly rows=5 cols=50>21cd0abf</textarea></td></tr>
+
+</table>
+<hr><h4>ipp-2023-tests/interpret-only/krivka</h4><table><tr><th>Test name</th><th>Return code</th><th>Output</th></tr>
+<tr><td>error_string_out_of_range</td><td>58</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
+
+<tr><td>read_test</td><td>0</td><td><textarea readonly rows=5 cols=50>42 <not-tag/> true</textarea></td></tr>
+
+<tr><td>stack_test</td><td>0</td><td><textarea readonly rows=5 cols=50>ahoj světe</textarea></td></tr>
+
+<tr><td>write_test</td><td>32</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
+
+</table>
+<hr><h4>ipp-2023-tests/interpret-only/jumps</h4><table><tr><th>Test name</th><th>Return code</th><th>Output</th></tr>
+<tr><td>duplicateLabel</td><td>52</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
+
+<tr><td>jumpForward</td><td>0</td><td><textarea readonly rows=5 cols=50>did jump</textarea></td></tr>
+
+<tr><td>jumpifeq</td><td>0</td><td><textarea readonly rows=5 cols=50>5</textarea></td></tr>
 
 </table>
 <hr><h4>ipp-2023-tests/interpret-only/frames</h4><table><tr><th>Test name</th><th>Return code</th><th>Output</th></tr>
@@ -160,9 +120,17 @@ abc</textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
 <tr><td>pushEmpty</td><td>55</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
+<tr><td>secondLF</td><td>0</td><td><textarea readonly rows=5 cols=50>510510</textarea></td></tr>
+
+<tr><td>TFafterPush</td><td>55</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
+
 </table>
 <hr><h4>ipp-2023-tests/interpret-only/arithmetic</h4><table><tr><th>Test name</th><th>Return code</th><th>Output</th></tr>
+<tr><td>correct</td><td>0</td><td><textarea readonly rows=5 cols=50>3</textarea></td></tr>
+
 <tr><td>incorrectInt</td><td>32</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
+
+<tr><td>negativeNum</td><td>0</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
 <tr><td>nil</td><td>53</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
@@ -176,13 +144,25 @@ abc</textarea></td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
 <tr><td>bad_root_element</td><td>32</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
+<tr><td>duplicit_order</td><td>32</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
+
 <tr><td>missing_argument</td><td>32</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
 <tr><td>missing_opcode</td><td>32</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
 <tr><td>missing_order</td><td>32</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
+<tr><td>negative_order</td><td>32</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
+
 <tr><td>string_order</td><td>32</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
+
+<tr><td>unknown_element2</td><td>32</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
+
+<tr><td>write_test</td><td>32</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
+
+</table>
+<hr><h4>ipp-2023-tests/interpret-only/31</h4><table><tr><th>Test name</th><th>Return code</th><th>Output</th></tr>
+<tr><td>fucked_up_xml</td><td>31</td><td><textarea readonly rows=5 cols=50></textarea></td></tr>
 
 </table>
 </body></html>

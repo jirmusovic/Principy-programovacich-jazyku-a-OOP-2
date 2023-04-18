@@ -1,8 +1,8 @@
-PY = python3.8.10
+PY = python3.10
 SCRIPT = interpret.py
 
 run:
-	$(PY) $(SCRIPT) --source=test_inputs/main4.xml --input=input
+	$(PY) $(SCRIPT) --source=tests/xml.xml --input=input
 
 test:
 	rm -f out.html

@@ -533,7 +533,7 @@ while($file != NULL) {
         $rc = NULL;
         $srcFile = $file->srcFile->getName();
         $outputFile = $srcFile."_tempOut.temp";
-        $cmd = "python3 " . $flag_intScriptFile . " --source=" . $srcFile . ".src --input="
+        $cmd = "python3.10 " . $flag_intScriptFile . " --source=" . $srcFile . ".src --input="
                 . $file->inFile->getName() . ".in";
         // Execute interpreter
         exec($cmd, $output, $rc);
@@ -633,7 +633,7 @@ while($file != NULL) {
         $srcFile = $file->srcFile->getName();
         $outputFile = $srcFile."_tempOut.temp";
 
-        $cmd = "php ".$flag_parseScriptFile." < ".$srcFile.".src | python3 ".$flag_intScriptFile." --input=".$srcFile.".in > ".$outputFile;
+        $cmd = "php ".$flag_parseScriptFile." < ".$srcFile.".src | python3.10 ".$flag_intScriptFile." --input=".$srcFile.".in > ".$outputFile;
 
         // Execute parser and interpreter
         exec($cmd, $output, $rc);

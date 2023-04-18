@@ -6,8 +6,6 @@
 """
 import re
 import sys
-from typing import Optional, List
-import xml.etree.ElementTree as eet
 import interpret
 
 # Main class with all the known instructions 
@@ -36,31 +34,31 @@ class Instruction:
             # Global frame
             if state == 1:
                 if not self.glob_frame.is_defined(arg):
-                    interpret.err("Běhová chyba interpretace – přístup k neexistující proměnné", 54)
+                    interpret.err("Behova chyba interpretace – pristup k neexistujici promenne", 54)
                     exit(54)                                # Variable is not defined in global frame
                 if not self.glob_frame.has_value(arg):
-                    interpret.err("Běhová chyba interpretace – chybějící hodnota", 56)
+                    interpret.err("Behova chyba interpretace – chybejici hodnota", 56)
                     exit(56)                                # Variable in global frame has no value
                 return self.glob_frame.get(arg)
             # Local frame
             if state == 2:
                 if not self.loc_frame.is_defined(arg):
-                    interpret.err("Běhová chyba interpretace – přístup k neexistující proměnné", 54)
+                    interpret.err("Behova chyba interpretace – pristup k neexistujici promenne", 54)
                     exit(54)
                 if not self.loc_frame.has_value(arg):
-                    interpret.err("Běhová chyba interpretace – chybějící hodnota", 56)
+                    interpret.err("Behova chyba interpretace – chybejici hodnota", 56)
                     exit(56)
                 return self.loc_frame.get(arg)
             # Temporary frame
             if state == 3:
                 if self.temp_frame == None:
-                    interpret.err("Běhová chyba interpretace – rámec neexistuje", 55)
+                    interpret.err("Behova chyba interpretace – ramec neexistuje", 55)
                     exit(55)                                # Temporary frame does not exist     
                 if not self.temp_frame.is_defined(arg):
-                    interpret.err("Běhová chyba interpretace – přístup k neexistující proměnné", 54)
+                    interpret.err("Behova chyba interpretace – pristup k neexistujici promenne", 54)
                     exit(54)
                 if not self.temp_frame.has_value(arg):
-                    interpret.err("Běhová chyba interpretace – chybějící hodnota", 56)
+                    interpret.err("Behova chyba interpretace – chybejici hodnota", 56)
                     exit(56)
                 return self.temp_frame.get(arg)
         
@@ -126,7 +124,7 @@ class Instruction:
         if arg.startswith("TF@"):
             return 3
         else:
-            interpret.err("Běhová chyba interpretace – přístup k neexistující proměnné", 54)
+            interpret.err("Behova chyba interpretace – pristup k neexistujici promenne", 54)
             sys.exit(54)
 
     # # Get state of each variable and decide in what frame was it put and return given frame
@@ -162,16 +160,16 @@ class Instruction:
     def MOVE(self, state):
         # Check if given arguments are correct types
         if state.type1 != "var":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             sys.exit(53)
             # Get value, frame and type o the second argument
         val, type = self.get_value_type(state.arg2, state.type2)
         frame = self.get_frame(state.arg1)
         if frame == None:
-            interpret.err("Běhová chyba interpretace – přístup k neexistující proměnné", 54)
+            interpret.err("Behova chyba interpretace – pristup k neexistujici promenne", 54)
             exit(54)
         if not frame.is_defined(state.arg1):
-            interpret.err("Běhová chyba interpretace – přístup k neexistující proměnné", 54)
+            interpret.err("Behova chyba interpretace – pristup k neexistujici promenne", 54)
             exit(54)
         frame.define(state.arg1, val, type)
 
@@ -179,15 +177,15 @@ class Instruction:
     def DEFVAR(self, state):
         # Check if given arguments are correct types
         if state.type1 != "var":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         # Get frame of the variable
         frame = self.get_frame(state.arg1)
         if frame == None:
-            interpret.err("Běhová chyba interpretace – rámec neexistuje", 55)
+            interpret.err("Behova chyba interpretace – ramec neexistuje", 55)
             exit(55)
         if frame.is_defined(state.arg1):
-            interpret.err("Chyba při sémantických kontrolách vstupního kódu v IPPcode23", 52)
+            interpret.err("Chyba pri semantickych kontrolach vstupniho kodu v IPPcode23", 52)
             exit(52)
         frame.define(state.arg1, "empty", "empty")
 
@@ -195,10 +193,10 @@ class Instruction:
     def CALL(self, state):
         # Check if given arguments are correct types
         if state.type1 != "label":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         if state.arg1 not in self.labels.keys():
-            interpret.err("Běhová chyba interpretace – rámec neexistuje", 55)
+            interpret.err("Behova chyba interpretace – ramec neexistuje", 55)
             exit(55)
         # Append object to the end of a list
         self.call_stack.append(state.order + 1)
@@ -207,7 +205,7 @@ class Instruction:
     # Move to the position saved by 'CALL'
     def RETURN(self, state):
         if len(self.call_stack) < 1:
-            interpret.err("Běhová chyba interpretace – chybějící hodnota", 56)
+            interpret.err("Behova chyba interpretace – chybejici hodnota", 56)
             exit(56)
         return self.call_stack.pop()
 
@@ -219,38 +217,38 @@ class Instruction:
     # Pop a value from the top of a stack
     def POPS(self, state):
         if len(self.stack) < 0:
-            interpret.err("Běhová chyba interpretace – chybějící hodnota", 56)
+            interpret.err("Behova chyba interpretace – chybejici hodnota", 56)
             exit(56)
         # Check if given arguments are correct types
-        if state.type2 != "var":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+        if state.type1 != "var":
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
-        frame = self.get_frame(state.arg2)
+        frame = self.get_frame(state.arg1)
         if not frame.is_defined(state.arg1):
-            interpret.err("Běhová chyba interpretace – přístup k neexistující proměnné", 54)
+            interpret.err("Behova chyba interpretace – pristup k neexistujici promenne", 54)
             exit(54)
         valtype = self.stack.pop()
-        frame.define(valtype[0], valtype[1])
+        frame.define(state.arg1, valtype[0], valtype[1])
 
     # Add the values of the second and third given attributes and put the result into the first variable
     def ADD(self, state):
         # Check if given arguments are correct types
         if state.type1 != "var":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         frame = self.get_frame(state.arg1)
         if frame == None:
-            interpret.err("Běhová chyba interpretace – rámec neexistuje", 55)
+            interpret.err("Behova chyba interpretace – ramec neexistuje", 55)
             exit(55)
         if not frame.is_defined(state.arg1):
-            interpret.err("Běhová chyba interpretace – přístup k neexistující proměnné", 54)
+            interpret.err("Behova chyba interpretace – pristup k neexistujici promenne", 54)
             exit(54)
         # Get values and their types
         val1, type1 = self.get_value_type(state.arg2, state.type2)
         val2, type2 = self.get_value_type(state.arg3, state.type3)
         # Check if given arguments are correct types
         if type1 != "int" or type2 != "int":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         
         frame.define(state.arg1, val1+val2, "int")
@@ -260,21 +258,21 @@ class Instruction:
     def SUB(self, state):
         # Check if given arguments are correct types
         if state.type1 != "var":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         frame = self.get_frame(state.arg1)
         if frame == None:
-            interpret.err("Běhová chyba interpretace – rámec neexistuje", 55)
+            interpret.err("Behova chyba interpretace – ramec neexistuje", 55)
             exit(55)
         if not frame.is_defined(state.arg1):
-            interpret.err("Běhová chyba interpretace – přístup k neexistující proměnné", 54)
+            interpret.err("Behova chyba interpretace – pristup k neexistujici promenne", 54)
             exit(54)
         # Get values and their types
         val1, type1 = self.get_value_type(state.arg2, state.type2)
         val2, type2 = self.get_value_type(state.arg3, state.type3)
         # Check if given arguments are correct types
         if type1 != "int" or type2 != "int":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         
         frame.define(state.arg1, val1-val2, "int")
@@ -283,21 +281,21 @@ class Instruction:
     def MUL(self, state):
         # Check if given arguments are correct types
         if state.type1 != "var":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         frame = self.get_frame(state.arg1)
         if frame == None:
-            interpret.err("Běhová chyba interpretace – rámec neexistuje", 55)
+            interpret.err("Behova chyba interpretace – ramec neexistuje", 55)
             exit(55)
         if not frame.is_defined(state.arg1):
-            interpret.err("Běhová chyba interpretace – přístup k neexistující proměnné", 54)
+            interpret.err("Behova chyba interpretace – pristup k neexistujici promenne", 54)
             exit(54)
         # Get values and their types
         val1, type1 = self.get_value_type(state.arg2, state.type2)
         val2, type2 = self.get_value_type(state.arg3, state.type3)
         # Check if given arguments are correct types
         if type1 != "int" or type2 != "int":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         
         frame.define(state.arg1, val1*val2, "int")
@@ -306,25 +304,25 @@ class Instruction:
     def IDIV(self, state):
         # Check if given arguments are correct types
         if state.type1 != "var":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         frame = self.get_frame(state.arg1)
         if frame == None:
-            interpret.err("Běhová chyba interpretace – rámec neexistuje", 55)
+            interpret.err("Behova chyba interpretace – ramec neexistuje", 55)
             exit(55)
         if not frame.is_defined(state.arg1):
-            interpret.err("Běhová chyba interpretace – přístup k neexistující proměnné", 54)
+            interpret.err("Behova chyba interpretace – pristup k neexistujici promenne", 54)
             exit(54)
         # Get values and their types
         val1, type1 = self.get_value_type(state.arg2, state.type2)
         val2, type2 = self.get_value_type(state.arg3, state.type3)
         # Check if given arguments are correct types
         if type1 != "int" or type2 != "int":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         
         if(val2 == 0):
-            interpret.err("Běhová chyba interpretace – špatná hodnota operandu", 57)
+            interpret.err("Behova chyba interpretace – spatna hodnota operandu", 57)
             exit(57)
 
         frame.define(state.arg1, val1//val2, "int")
@@ -333,21 +331,21 @@ class Instruction:
     def LT(self, state):
         # Check if given arguments are correct types
         if state.type1 != "var":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         # Get frame or variable
         frame = self.get_frame(state.arg1)
         if frame == None:
-            interpret.err("Běhová chyba interpretace – rámec neexistuje", 55)
+            interpret.err("Behova chyba interpretace – ramec neexistuje", 55)
             exit(55)
         if not frame.is_defined(state.arg1):
-            interpret.err("Běhová chyba interpretace – přístup k neexistující proměnné", 54)
+            interpret.err("Behova chyba interpretace – pristup k neexistujici promenne", 54)
             exit(54)
         # Get values and their types
         val1, type1 = self.get_value_type(state.arg2, state.type2)
         val2, type2 = self.get_value_type(state.arg3, state.type3)
         if type1 != type2 or type1 == "nil" or type2 == "nil":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         if val1 < val2:
             frame.define(state.arg1, True, "bool")
@@ -358,21 +356,21 @@ class Instruction:
     def GT(self, state):
         # Check if given arguments are correct types
         if state.type1 != "var":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         # Get frame os variable
         frame = self.get_frame(state.arg1)
         if frame == None:
-            interpret.err("Běhová chyba interpretace – rámec neexistuje", 55)
+            interpret.err("Behova chyba interpretace – ramec neexistuje", 55)
             exit(55)
         if not frame.is_defined(state.arg1):
-            interpret.err("Běhová chyba interpretace – přístup k neexistující proměnné", 54)
+            interpret.err("Behova chyba interpretace – pristup k neexistujici promenne", 54)
             exit(54)
         # Get values and their types
         val1, type1 = self.get_value_type(state.arg2, state.type2)
         val2, type2 = self.get_value_type(state.arg3, state.type3)
         if type1 != type2 or type1 == "nil" or type2 == "nil":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         if val1 > val2:
             frame.define(state.arg1, True, "bool")
@@ -383,15 +381,15 @@ class Instruction:
     def EQ(self, state):
         # Check if given arguments are correct types
         if state.type1 != "var":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         # Get frame of variable
         frame = self.get_frame(state.arg1)
         if frame == None:
-            interpret.err("Běhová chyba interpretace – rámec neexistuje", 55)
+            interpret.err("Behova chyba interpretace – ramec neexistuje", 55)
             exit(55)
         if not frame.is_defined(state.arg1):
-            interpret.err("Běhová chyba interpretace – přístup k neexistující proměnné", 54)
+            interpret.err("Behova chyba interpretace – pristup k neexistujici promenne", 54)
             exit(54)
         # Get values and their types
         val1, type1 = self.get_value_type(state.arg2, state.type2)
@@ -408,29 +406,29 @@ class Instruction:
                 else:
                     frame.define(state.arg1, False, "bool")
             else:
-                interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+                interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
                 exit(53)
 
     # Logical and
     def AND(self, state):
         # Check if given arguments are correct types
         if state.type1 != "var":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         # Get frame of variable
         frame = self.get_frame(state.arg1)
         if frame == None:
-            interpret.err("Běhová chyba interpretace – rámec neexistuje", 55)
+            interpret.err("Behova chyba interpretace – ramec neexistuje", 55)
             exit(55)
         if not frame.is_defined(state.arg1):
-            interpret.err("Běhová chyba interpretace – přístup k neexistující proměnné", 54)
+            interpret.err("Behova chyba interpretace – pristup k neexistujici promenne", 54)
             exit(54)
         # Get values and their types
         val1, type1 = self.get_value_type(state.arg2, state.type2)
         val2, type2 = self.get_value_type(state.arg3, state.type3)
         # Check if given arguments are correct types
         if type1 != "bool" or type2 != "bool":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         frame.define(state.arg1, val1 and val2, "bool")
 
@@ -438,22 +436,22 @@ class Instruction:
     def OR(self, state):
         # Check if given arguments are correct types
         if state.type1 != "var":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         # Get frame of variable
         frame = self.get_frame(state.arg1)
         if frame == None:
-            interpret.err("Běhová chyba interpretace – rámec neexistuje", 55)
+            interpret.err("Behova chyba interpretace – ramec neexistuje", 55)
             exit(55)
         if not frame.is_defined(state.arg1):
-            interpret.err("Běhová chyba interpretace – přístup k neexistující proměnné", 54)
+            interpret.err("Behova chyba interpretace – pristup k neexistujici promenne", 54)
             exit(54)
         # Get values and their types
         val1, type1 = self.get_value_type(state.arg2, state.type2)
         val2, type2 = self.get_value_type(state.arg3, state.type3)
         # Check if given arguments are correct types
         if type1 != "bool" or type2 != "bool":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         frame.define(state.arg1, val1 or val2, "bool")
 
@@ -461,20 +459,20 @@ class Instruction:
     def NOT(self, state):
         # Check if given arguments are correct types
         if state.type1 != "var":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         frame = self.get_frame(state.arg1)
         if frame == None:
-            interpret.err("Běhová chyba interpretace – rámec neexistuje", 55)
+            interpret.err("Behova chyba interpretace – ramec neexistuje", 55)
             exit(55)
         if not frame.is_defined(state.arg1):
-            interpret.err("Běhová chyba interpretace – přístup k neexistující proměnné", 54)
+            interpret.err("Behova chyba interpretace – pristup k neexistujici promenne", 54)
             exit(54)
         # Get value and its type
         val1, type1 = self.get_value_type(state.arg2, state.type2)
         # Check if given arguments are correct types
         if type1 != "bool" :
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         frame.define(state.arg1, not val1, "bool")
 
@@ -482,23 +480,23 @@ class Instruction:
     def STRI2INT(self, state):
         # Check if given arguments are correct types
         if state.type1 != "var":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         frame = self.get_frame(state.arg1)
         if frame == None:
             exit(55)
         if not frame.is_defined(state.arg1):
-            interpret.err("Běhová chyba interpretace – přístup k neexistující proměnné", 54)
+            interpret.err("Behova chyba interpretace – pristup k neexistujici promenne", 54)
             exit(54)
         # Get values and their types
         val1, type1 = self.get_value_type(state.arg2, state.type2)
         val2, type2 = self.get_value_type(state.arg3, state.type3)
         # Check if given arguments are correct types
         if type1 != "string" or type2 != "int":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         if val2 >= len(val1) or val2 < 0:
-            interpret.err("Běhová chyba interpretace – chybná práce s řetězcem", 58)
+            interpret.err("Behova chyba interpretace - chybna prace s retezcem", 58)
             exit(58)
         frame.define(state.arg1, ord(val1[val2]), "int")
 
@@ -506,39 +504,39 @@ class Instruction:
     def INT2CHAR(self, state):
         # Check if given arguments are correct types
         if state.type1 != "var":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         frame = self.get_frame(state.arg1)
         if frame == None:
-            interpret.err("Běhová chyba interpretace – rámec neexistuje", 55)
+            interpret.err("Behova chyba interpretace – ramec neexistuje", 55)
             exit(55)
         if not frame.is_defined(state.arg1):
-            interpret.err("Běhová chyba interpretace – přístup k neexistující proměnné", 54)
+            interpret.err("Behova chyba interpretace – pristup k neexistujici promenne", 54)
             exit(54)
         # Get value and its type
         val1, type1 = self.get_value_type(state.arg2, state.type2)
         # Check if given arguments are correct types
         if type1 != "int":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         # Check if value is in ASCII range
         if val1 < 0 or val1 > 0x10ffff:
-            interpret.err("Běhová chyba interpretace – chybná práce s řetězcem", 58)
+            interpret.err("Behova chyba interpretace - chybna prace s retezcem", 58)
             exit(58)
         frame.define(state.arg1, chr(val1), "string")
 
-    # 
+    # Reads values from stdin
     def READ(self, state):
         # Check if given arguments are correct types
         if state.type1 != "var" or state.type2 != "type":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         frame = self.get_frame(state.arg1)
         if frame == None:
-            interpret.err("Běhová chyba interpretace – rámec neexistuje", 55)
+            interpret.err("Behova chyba interpretace – ramec neexistuje", 55)
             exit(55)
         if not frame.is_defined(state.arg1):
-            interpret.err("Běhová chyba interpretace – přístup k neexistující proměnné", 54)
+            interpret.err("Behova chyba interpretace – pristup k neexistujici promenne", 54)
             exit(54)
         string = self.get_input()
         # Check type
@@ -558,6 +556,7 @@ class Instruction:
             else:
                 frame.define(state.arg1, False, "bool")
 
+    # Prints values to standart output
     def WRITE(self, state):
         # Get and then check value and type
         val, type = self.get_value_type(state.arg1, state.type1)
@@ -571,90 +570,93 @@ class Instruction:
         elif type == "nil":
             print("", end="")
 
-
+    # Concatenates 2 strings
     def CONCAT(self, state):
         # Check if given arguments are correct types
         if state.type1 != "var":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         frame = self.get_frame(state.arg1)
         if frame == None:
-            interpret.err("Běhová chyba interpretace – rámec neexistuje", 55)
+            interpret.err("Behova chyba interpretace – ramec neexistuje", 55)
             exit(55)
         if not frame.is_defined(state.arg1):
-            interpret.err("Běhová chyba interpretace – přístup k neexistující proměnné", 54)
+            interpret.err("Behova chyba interpretace – pristup k neexistujici promenne", 54)
             exit(54)
         val1, type1 = self.get_value_type(state.arg2, state.type2)
         val2, type2 = self.get_value_type(state.arg3, state.type3)
         # Check if given arguments are correct types
         if type1 != "string" or type2 != "string":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         
         frame.define(state.arg1, val1+val2, "string")
 
+    # Gets length of a string
     def STRLEN(self, state):
         # Check if given arguments are correct types
         if state.type1 != "var":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         frame = self.get_frame(state.arg1)
         if frame == None:
-            interpret.err("Běhová chyba interpretace – rámec neexistuje", 55)
+            interpret.err("Behova chyba interpretace – ramec neexistuje", 55)
             exit(55)
         if not frame.is_defined(state.arg1):
-            interpret.err("Běhová chyba interpretace – přístup k neexistující proměnné", 54)
+            interpret.err("Behova chyba interpretace – pristup k neexistujici promenne", 54)
             exit(54)
         val1, type1 = self.get_value_type(state.arg2, state.type2)
         # Check if given arguments are correct types
         if type1 != "string":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         frame.define(state.arg1, len(val1), "int")
 
+    # Returns character from string
     def GETCHAR(self, state):
         # Check if given arguments are correct types
         if state.type1 != "var":
             exit(53)
         frame = self.get_frame(state.arg1)
         if frame == None:
-            interpret.err("Běhová chyba interpretace – rámec neexistuje", 55)
+            interpret.err("Behova chyba interpretace – ramec neexistuje", 55)
             exit(55)
         if not frame.is_defined(state.arg1):
-            interpret.err("Běhová chyba interpretace – přístup k neexistující proměnné", 54)
+            interpret.err("Behova chyba interpretace – pristup k neexistujici promenne", 54)
             exit(54)
         val1, type1 = self.get_value_type(state.arg2, state.type2)
         val2, type2 = self.get_value_type(state.arg3, state.type3)
         # Check if given arguments are correct types
         if type1 != "string" or type2 != "int":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         if val2 >= len(val1) or val2 < 0:
-            interpret.err("Běhová chyba interpretace – chybná práce s řetězcem", 58)
+            interpret.err("Behova chyba interpretace - chybna prace s retezcem", 58)
             exit(58)
         frame.define(state.arg1, val1[val2], "string")
 
+    # Changes value in a string
     def SETCHAR(self, state):
         # Check if given arguments are correct types
         if state.type1 != "var":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         frame = self.get_frame(state.arg1)
         if frame == None:
-            interpret.err("Běhová chyba interpretace – rámec neexistuje", 55)
+            interpret.err("Behova chyba interpretace – ramec neexistuje", 55)
             exit(55)
         if not frame.is_defined(state.arg1):
-            interpret.err("Běhová chyba interpretace – přístup k neexistující proměnné", 54)
+            interpret.err("Behova chyba interpretace – pristup k neexistujici promenne", 54)
             exit(54)
         val0, type0 = self.get_value_type(state.arg1, state.type1)
         val1, type1 = self.get_value_type(state.arg2, state.type2)
         val2, type2 = self.get_value_type(state.arg3, state.type3)
         # Check if given arguments are correct types
         if type0 != "string" or type1 != "int" or type2 != "string":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         if val1 >= len(val0) or val1 < 0 or len(val2) < 1:
-            interpret.err("Běhová chyba interpretace – chybná práce s řetězcem", 58)
+            interpret.err("Behova chyba interpretace - chybna prace s retezcem", 58)
             exit(58)
         string = ""
         for i in range(0, len(val0)):
@@ -665,50 +667,53 @@ class Instruction:
 
         frame.define(state.arg1, string, "string")
 
+    # Gets type of given symbol
     def TYPE(self, state):
         # Check if given arguments are correct types
         if state.type1 != "var":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         frame = self.get_frame(state.arg1)
         if frame == None:
-            interpret.err("Běhová chyba interpretace – rámec neexistuje", 55)
+            interpret.err("Behova chyba interpretace – ramec neexistuje", 55)
             exit(55)
         if not frame.is_defined(state.arg1):
-            interpret.err("Běhová chyba interpretace – přístup k neexistující proměnné", 54)
+            interpret.err("Behova chyba interpretace – pristup k neexistujici promenne", 54)
             exit(54)
             
         _, type1 = self.get_value_type(state.arg2, state.type2)
         frame.define(state.arg1, type1, "string")
 
-
+    # Label
     def LABEL(self, state):
         # Check if given arguments are correct types
         if state.type1 != "label":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         if state.arg1 in self.labels:
-            interpret.err("Chyba při sémantických kontrolách vstupního kódu v IPPcode23", 52)
+            interpret.err("Chyba pri semantickych kontrolach vstupniho kodu v IPPcode23", 52)
             exit(52)
         self.labels[state.arg1] = state.order
 
+    # Jumps to label
     def JUMP(self, state):
         # Check if given arguments are correct types
         if state.type1 != "label":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         if state.arg1 not in self.labels.keys():
-            interpret.err("Běhová chyba interpretace – rámec neexistuje", 55)
+            interpret.err("Behova chyba interpretace – ramec neexistuje", 55)
             exit(55)
         return self.labels[state.arg1]
 
+    # Jumps to label if given variables equal
     def JUMPIFEQ(self, state):
         # Check if given arguments are correct types
         if state.type1 != "label":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         if state.arg1 not in self.labels.keys():
-            interpret.err("Chyba při sémantických kontrolách vstupního kódu v IPPcode23", 52)
+            interpret.err("Chyba pri semantickych kontrolach vstupniho kodu v IPPcode23", 52)
             exit(52)
         val1, type1 = self.get_value_type(state.arg2, state.type2)
         val2, type2 = self.get_value_type(state.arg3, state.type3)
@@ -718,17 +723,17 @@ class Instruction:
         elif type1 == "nil" or type2 == "nil":
             return None
         else:
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
 
-
+    # Jumps to label if given variables dont equal
     def JUMPIFNEQ(self, state):
         # Check if given arguments are correct types
         if state.type1 != "label":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         if state.arg1 not in self.labels.keys():
-            interpret.err("Chyba při sémantických kontrolách vstupního kódu v IPPcode23", 52)
+            interpret.err("Chyba pri semantickych kontrolach vstupniho kodu v IPPcode23", 52)
             exit(52)
         val1, type1 = self.get_value_type(state.arg2, state.type2)
         val2, type2 = self.get_value_type(state.arg3, state.type3)
@@ -738,43 +743,58 @@ class Instruction:
             return None
         elif type1 == "nil" or type2 == "nil":
             return self.labels[state.arg1]
-        interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+        interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
         exit(53)
-        
 
+    # Shuts down program with a return code
     def EXIT(self, state):
         val1, type1 = self.get_value_type(state.arg1, state.type1)
         # Check if given arguments are correct types
         if type1 != "string" and type1 != "int":
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         if type1 == "string" and not type1.isdigit():
-            interpret.err("Běhová chyba interpretace – špatné typy operandů", 53)
+            interpret.err("Behova chyba interpretace – spatne typy operandu", 53)
             exit(53)
         if int(val1) < 0 or int(val1) > 49:
-            interpret.err("Běhová chyba interpretace – špatná hodnota operandu", 57)
+            interpret.err("Behova chyba interpretace – spatna hodnota operandu", 57)
             exit(57)
         exit(int(val1))
 
-    def DPRINT(self, state):
-        print(state.order)
-
-    def BREAK(self, state):
-        print(state.order)
-        
+    # Creates new temporary frame
     def CREATEFRAME(self, state):
         self.temp_frame = TemporalFrame()
         
+    # Moves actual frame to a temporary one
     def POPFRAME(self, state):
         self.temp_frame = TemporalFrame()
         self.temp_frame.variables = self.loc_frame.pop()
         
+    # Movec temporary frame to a framestack
     def PUSHFRAME(self, state):
         if self.temp_frame == None:
-            interpret.err("Běhová chyba interpretace – rámec neexistuje", 55)
+            interpret.err("Behova chyba interpretace – ramec neexistuje", 55)
             sys.exit(55)
         self.loc_frame.push(self.temp_frame.variables)
         self.temp_frame = None
+    
+    # Prints values to error output
+    def DPRINT(self, state):
+        # Get and then check value and type
+        val, type = self.get_value_type(state.arg1, state.type1)
+        if type == "string" or type == "int":
+            sys.stderr.write(val)
+        elif type == "bool":
+            if val:
+                sys.stderr.write("true")
+            else:
+                sys.stderr.write("false")
+        elif type == "nil":
+            sys.stderr.write("")
+        
+    # Not implemented
+    def BREAK(self, state):
+        return None
 
 
 # Class for transfering information about instruction
@@ -818,7 +838,7 @@ class GlobalFrame:
         if name in self.variables:
             return self.variables[name][0], self.variables[name][1]
         else:
-            interpret.err("Běhová chyba interpretace – přístup k neexistující proměnné", 54)
+            interpret.err("Behova chyba interpretace – pristup k neexistujici promenne", 54)
             exit(54)
 
     # Return a string representation of the object that can be used to recreate the object or display useful information about it
@@ -852,7 +872,7 @@ class LocalFrame:
             self.frames.pop()
             return newframe
         else:
-            interpret.err("Běhová chyba interpretace – rámec neexistuje", 55)
+            interpret.err("Behova chyba interpretace – ramec neexistuje", 55)
             sys.exit(55)
 
     # Add a new variable and its type to the current frame
@@ -860,7 +880,7 @@ class LocalFrame:
         if len(self.frames) > 0:
             self.frames[len(self.frames) - 1][name] = [value, type]
         else:
-            interpret.err("Běhová chyba interpretace – rámec neexistuje", 55)
+            interpret.err("Behova chyba interpretace – ramec neexistuje", 55)
             sys.exit(55)
 
     # Check whether a variable with the given name has been defined in the current frame
@@ -885,10 +905,10 @@ class LocalFrame:
             if name in self.frames[len(self.frames) - 1]:
                 return self.frames[len(self.frames) - 1][name][0], self.frames[len(self.frames) - 1][name][1]
             else:
-                interpret.err("Běhová chyba interpretace – přístup k neexistující proměnné", 54)
+                interpret.err("Behova chyba interpretace – pristup k neexistujici promenne", 54)
                 exit(54)
         else:
-            interpret.err("Běhová chyba interpretace – rámec neexistuje", 55)
+            interpret.err("Behova chyba interpretace – ramec neexistuje", 55)
             sys.exit(55)
 
     # Return a string representation of the object that can be used to recreate the object or display useful information about it
@@ -921,7 +941,7 @@ class TemporalFrame:
         if name in self.variables:
             return self.variables[name][0], self.variables[name][1]
         else:
-            interpret.err("Běhová chyba interpretace – přístup k neexistující proměnné", 54)
+            interpret.err("Behova chyba interpretace – pristup k neexistujici promenne", 54)
             exit(54)
 
     # Return a string representation of the object that can be used to recreate the object or display useful information about it
